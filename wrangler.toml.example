@@ -1,0 +1,6 @@
+name = "fabricworker"
+main = "src/index.ts"
+compatibility_date = "2022-08-27"
+kv_namespaces = [
+    { binding = "<ADD BINDING>", id = "<ADD ID>",preview_id = "<ADD PREVIEW ID>" },
+]
