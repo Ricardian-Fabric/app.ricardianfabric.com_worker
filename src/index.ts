@@ -64,7 +64,10 @@ async function fetchRouter(path: Paths, urlToFetch: string, arweaveTx: string) {
 }
 
 async function notFound(init: any): Promise<Response> {
-  return new Response("Not Found", { ...init, status: 404 });
+  return new Response(
+    "Not Found, If You just uploaded a contract wait a few minutes for the transaction to be mined!",
+    { ...init, status: 404 }
+  );
 }
 
 async function fetchText(urlToFetch: string, init: any): Promise<Response> {
