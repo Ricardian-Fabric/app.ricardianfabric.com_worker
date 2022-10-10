@@ -6,6 +6,8 @@ export enum Paths {
   main,
   dep,
   contract,
+  tokensaleMain,
+  daoMain
 }
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -211,14 +213,30 @@ async function parsePaths(
   if (url.pathname === "/") {
     const main = (await env.LINKS.get("main")) as string;
     return [Paths.main, main, ""];
+
   } else if (url.pathname === "/deps") {
     const dep = (await env.LINKS.get("dependency")) as string;
     return [Paths.dep, dep, ""];
-  } else if (url.pathname.includes("/contract/")) {
+
+  } else if (url.pathname.includes("/deps/")) {
+    const version = url.pathname.replace("/deps/", "");
+    const dep = (await env.LINKS.get(`dependency_${version}`)) as string;
+    return [Paths.dep, dep, ""];
+  }
+
+  else if (url.pathname.includes("/contract/")) {
     const arweaveId = url.pathname.split("/contract/", 2)[1];
     const arweaveUrl = "https://arweave.net/" + arweaveId;
     return [Paths.contract, arweaveUrl, arweaveId];
   }
+
+  else if (url.pathname.includes("/tokensale")) {
+    const main = (await env.LINKS.get(`tokensale`)) as string;
+    return [Paths.tokensaleMain, main, ""]
+  }
+
+  //This is the main app, for deploying contracts, always returns the latest version!
+
   const main = (await env.LINKS.get("main")) as string;
   return [Paths.main, main, ""];
 }
